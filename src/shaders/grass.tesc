@@ -30,16 +30,17 @@ void main() {
 	out_v1[gl_InvocationID] = in_v1[gl_InvocationID];
 	out_v2[gl_InvocationID] = in_v2[gl_InvocationID];
 	out_up[gl_InvocationID] = in_up[gl_InvocationID];
-	// TODO: Set level of tesselation
-	//tessellation levels
-    gl_TessLevelInner[0] = 5.0;
-    gl_TessLevelInner[1] = 1.0;
-    //btoom
-    gl_TessLevelOuter[0] = 1.0;
-    //right
-    gl_TessLevelOuter[1] = 5.0;
-    //top
-    gl_TessLevelOuter[2] = 1.0;
-    //left
-    gl_TessLevelOuter[3] = 5.0;
+	// Set tessellation levels
+	// Higher values = more segments = smoother curves
+	float verticalSegments = 10.0;
+	float horizontalSegments = 1.0;
+	
+    gl_TessLevelInner[0] = verticalSegments;   
+    gl_TessLevelInner[1] = horizontalSegments;
+    
+    gl_TessLevelOuter[0] = horizontalSegments; 
+    gl_TessLevelOuter[1] = verticalSegments;
+    gl_TessLevelOuter[2] = horizontalSegments;
+    gl_TessLevelOuter[3] = verticalSegments;
+
 }
