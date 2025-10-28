@@ -38,17 +38,24 @@ void main() {
 	float height = in_v1[0].w;
 	float width = in_v2[0].w;
 
+	// Compute Bezier curve position along height (v parameter)
 	vec3 a = v0 + v * (v1 - v0);
 	vec3 b = v1 + v * (v2 - v1);
 	vec3 c = a + v * (b - a);
 	
-	//forward direction for width offset
+	// Compute tangent (forward direction) for width offset
 	vec3 t1 = normalize(b - a);
+	
+	// Compute bitangent (perpendicular to blade for width)
 	float cosTheta = cos(orientation);
 	float sinTheta = sin(orientation);
 	vec3 facing = normalize(cross(up, vec3(sinTheta, 0.0, cosTheta)));
-	// Apply width offset
-	vec3 worldPos = c + (u - 0.5) * width * facing;
+	
+	// Taper width: full width at base (v=0), zero width at tip (v=1)
+	float currentWidth = width * (1.0 - v);
+	
+	// Apply width offset (u parameter: 0 = left edge, 1 = right edge)
+	vec3 worldPos = c + (u - 0.5) * currentWidth * facing;
 	// Output position in clip space
 	gl_Position = camera.proj * camera.view * vec4(worldPos, 1.0);
 	
