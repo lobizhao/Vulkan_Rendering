@@ -44,7 +44,6 @@ void main() {
 	                 2.0 * (1.0 - t) * t * v1 + 
 	                 t * t * v2;
 	
-	// Compute tangent for proper orientation
 	vec3 tangent = 2.0 * (1.0 - t) * (v1 - v0) + 2.0 * t * (v2 - v1);
 	if (length(tangent) > 0.0001) {
 		tangent = normalize(tangent);
@@ -52,22 +51,19 @@ void main() {
 		tangent = normalize(v2 - v0);
 	}
 	
-	// Compute bitangent (perpendicular to blade for width)
 	float cosTheta = cos(orientation);
 	float sinTheta = sin(orientation);
 	vec3 facing = normalize(cross(up, vec3(sinTheta, 0.0, cosTheta)));
 	
-	// Shape control: triangular blade (wide at base, point at tip)
-	// v=0 (base): full width
-	// v=1 (tip): zero width (point)
+	//triangular blade
+
 	float widthCoeff = 1.0 - v;
 	float currentWidth = width * widthCoeff;
 	
-	// Apply width offset
+	//width offset
 	vec3 worldPos = bezierPos + (u - 0.5) * currentWidth * facing;
 	gl_Position = camera.proj * camera.view * vec4(worldPos, 1.0);
-	
-    // Output normal and height
+    //normal and height
 	out_normal = normalize(cross(tangent, facing));
 	out_height = v;
 }

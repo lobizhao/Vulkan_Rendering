@@ -30,10 +30,12 @@ void main() {
 	out_v1[gl_InvocationID] = in_v1[gl_InvocationID];
 	out_v2[gl_InvocationID] = in_v2[gl_InvocationID];
 	out_up[gl_InvocationID] = in_up[gl_InvocationID];
-	// Set tessellation levels
-	// Higher values = more segments = smoother curves
-	float verticalSegments = 10.0;
-	float horizontalSegments = 1.0;
+
+	// Tessellation levels: vertical (height) and horizontal (width)
+	// Vertical: more segments = smoother bending
+	// Horizontal: grass blades are thin, don't need many segments
+	float verticalSegments = 1.0;
+	float horizontalSegments = 15.0;
 	
     gl_TessLevelInner[0] = verticalSegments;   
     gl_TessLevelInner[1] = horizontalSegments;
