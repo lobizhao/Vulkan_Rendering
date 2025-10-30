@@ -10,7 +10,7 @@ Vulkan Grass Rendering
 <div align="center">
   <img src="img/headImg.gif">
   <br>
-  Overlook.obj
+  Overlook
 </div>
 
 ## Features Implemented
@@ -102,7 +102,7 @@ InitializeWindow(1080, 768)
 <div align="center">
   <img src="img/Lod.gif" width="500">
   <br>
-  <i>Tessellation Lod</i>
+  <i>Tessellation LOD</i>
 </div>
 
 - Dynamic tessellation level based on distance to camera
