@@ -31,11 +31,18 @@ void main() {
 	out_v2[gl_InvocationID] = in_v2[gl_InvocationID];
 	out_up[gl_InvocationID] = in_up[gl_InvocationID];
 
-	// Tessellation levels: vertical (height) and horizontal (width)
-	// Vertical: more segments = smoother bending
-	// Horizontal: grass blades are thin, don't need many segments
-	float verticalSegments = 1.0;
-	float horizontalSegments = 15.0;
+	//distance tessellation
+	vec3 cameraPos = (inverse(camera.view) * vec4(0, 0, 0, 1)).xyz;
+	vec3 bladePos = in_v0[gl_InvocationID].xyz;
+	float dist = length(bladePos - cameraPos);
+	
+	//LOD
+	float nearDist = 5.0;
+	float farDist = 20.0;
+	float lodFactor = clamp(1.0 - (dist - nearDist) / (farDist - nearDist), 0.0, 1.0);
+
+	float verticalSegments = mix(1.0, 5.0, lodFactor);
+	float horizontalSegments = mix(1.0, 7.0, lodFactor);
 	
     gl_TessLevelInner[0] = verticalSegments;   
     gl_TessLevelInner[1] = horizontalSegments;
